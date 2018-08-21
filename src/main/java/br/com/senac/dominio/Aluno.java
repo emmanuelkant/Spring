@@ -13,7 +13,7 @@ public class Aluno implements Serializable{
 	/**
 	 * Id de serialização gerado automaticamente.
 	 */
-	//private static final long serialVersionUID = 4138610444663921602L;
+	private static final long serialVersionUID = 4138610444663921602L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
