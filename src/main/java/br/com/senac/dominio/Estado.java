@@ -1,27 +1,28 @@
 package br.com.senac.dominio;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Aluno implements Serializable {
+public class Estado implements Serializable{
 
-	/**
-	 * Id de serialização gerado automaticamente.
-	 */
-	private static final long serialVersionUID = 4138610444663921602L;
+	private static final long serialVersionUID = -2215646124649808096L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-
+	
 	private String nome;
-
-	private String email;
+	
+	@OneToMany(mappedBy="estado")
+	private List<Cidade> cidades = new ArrayList();
 
 	public Integer getId() {
 		return id;
@@ -39,12 +40,14 @@ public class Aluno implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getEmail() {
-		return email;
+	public List<Cidade> getCidades() {
+		return cidades;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
 	}
-
+	
+	
+	
 }

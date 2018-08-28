@@ -6,22 +6,23 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Aluno implements Serializable {
+public class Cidade implements Serializable{
 
-	/**
-	 * Id de serialização gerado automaticamente.
-	 */
-	private static final long serialVersionUID = 4138610444663921602L;
-
+	private static final long serialVersionUID = -8018339697900653150L;
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-
+	
 	private String nome;
-
-	private String email;
+	
+	@ManyToOne
+	@JoinColumn(name="estado_id")
+	private Estado estado;
 
 	public Integer getId() {
 		return id;
@@ -39,12 +40,12 @@ public class Aluno implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getEmail() {
-		return email;
+	public Estado getEstado() {
+		return estado;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
-
+	
 }
