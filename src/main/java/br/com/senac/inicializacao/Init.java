@@ -9,7 +9,9 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import br.com.senac.dominio.Aluno;
+import br.com.senac.dominio.Categoria;
 import br.com.senac.dominio.Cidade;
+import br.com.senac.dominio.Curso;
 import br.com.senac.dominio.Endereco;
 import br.com.senac.dominio.Estado;
 import br.com.senac.dominio.Pagamento;
@@ -17,7 +19,9 @@ import br.com.senac.dominio.PagamentoComBoleto;
 import br.com.senac.dominio.Pedido;
 import br.com.senac.dominio.enums.StatusPagamento;
 import br.com.senac.repositorio.AlunoRepositorio;
+import br.com.senac.repositorio.CategoriaRepositorio;
 import br.com.senac.repositorio.CidadeRepositorio;
+import br.com.senac.repositorio.CursoRepositorio;
 import br.com.senac.repositorio.EnderecoRepositorio;
 import br.com.senac.repositorio.EstadoRepositorio;
 import br.com.senac.repositorio.PagamentoRepositorio;
@@ -43,9 +47,65 @@ public class Init implements ApplicationListener<ContextRefreshedEvent> {
 	
 	@Autowired
 	PagamentoRepositorio pagamentoRepositorio;
+	
+	@Autowired
+	CursoRepositorio cursoRepositorio;
+	
+	@Autowired
+	CategoriaRepositorio categoriaRepositorio;
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
+		
+		/*
+		 * 
+		 * Cursos e categorias Many to Many
+		Cursos
+			Id
+			nome
+			descricao
+			preco (double)
+		
+		
+		Categoria
+			id
+			nome
+		 * */
+		
+		Curso curso1 = new Curso();
+		curso1.setNome("Java");
+		curso1.setDescricao("Curso da linguagem Java");
+		curso1.setPreco(150.54D);
+		
+		Curso curso2 = new Curso();
+		curso2.setNome("JavaScript");
+		curso2.setDescricao("Curso da linguagem JavaScript");
+		curso2.setPreco(225.87D);
+		
+		Categoria categoria1 = new Categoria();
+		categoria1.setNome("Web");
+		
+		Categoria categoria2 = new Categoria();
+		categoria2.setNome("Servidor");
+		
+		curso1.getCategorias().add(categoria1);
+		curso1.getCategorias().add(categoria2);
+		
+		curso2.getCategorias().add(categoria1);
+		curso2.getCategorias().add(categoria2);
+		
+		categoria1.getCursos().add(curso1);
+		categoria1.getCursos().add(curso2);
+		
+		categoria2.getCursos().add(curso1);
+		categoria2.getCursos().add(curso2);
+		
+		cursoRepositorio.saveAll(Arrays.asList(curso1, curso2));
+		categoriaRepositorio.saveAll(Arrays.asList(categoria1, categoria2));
+		
+		
+		
+		
 		Aluno aluno1 = new Aluno();
 		aluno1.setNome("Lucas");
 		aluno1.setEmail("lucas@gmail.com");
@@ -128,4 +188,5 @@ public class Init implements ApplicationListener<ContextRefreshedEvent> {
 			e.printStackTrace();
 		}
 	}
+	
 }
