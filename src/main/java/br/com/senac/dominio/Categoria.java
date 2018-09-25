@@ -28,8 +28,8 @@ public class Categoria implements Serializable {
 	private String nome;
 
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "categoria")
-	private List<Curso> cursos = new ArrayList<Curso>();
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "categorias")
+	private List<Curso> cursos = new ArrayList<>();
 
 	public Integer getId() {
 		return id;

@@ -35,7 +35,7 @@ public class Curso implements Serializable {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "categorias_cursos", joinColumns = { @JoinColumn(name = "curso_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "categoria_id") })
-	private List<Categoria> categorias = new ArrayList<Categoria>();
+	private List<Categoria> categorias = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
