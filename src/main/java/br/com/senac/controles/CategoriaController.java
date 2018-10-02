@@ -20,10 +20,9 @@ public class CategoriaController {
 		ModelAndView mv = new ModelAndView("/paginaCategorias");
 		mv.addObject("categorias", categoriaService.listaCategorias());
 		return mv;
-		
 	}
 	
-	@GetMapping("/formInserir")
+	@GetMapping("/formInserirCategoria")
 	public ModelAndView inserir() {
 		ModelAndView mv = new ModelAndView("/paginaInserir");
 		mv.addObject("categorias", categoriaService.listaCategorias());
@@ -31,7 +30,7 @@ public class CategoriaController {
 		
 	}
 	
-	@PostMapping("/inserir")
+	@PostMapping("/inserirCategoria")
 	public ModelAndView inserir(Categoria categoria) {
 		ModelAndView mv = new ModelAndView("/paginaInserir");
 		mv.addObject("categorias", categoriaService.inserir(categoria));

@@ -9,13 +9,13 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 	<meta >
-	<title>Menu</title>
+	<title>Lista de cursos</title>
 </head>
 <body>
 
 	<div class="painel panel-default">
 		<div class="panel-heading">
-			<strong>Categorias</strong>
+			<strong>Cursos</strong>
 		</div>
 	</div>
 
@@ -25,14 +25,18 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>Categoria</th>
-						<th></th>
+						<th>Curso</th>
+						<th>Descricao</th>
+						<th>Preco</th>
+						<th>Ações</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="cat : ${categorias}">
-						<td th:text="${cat.id}"></td>
-						<td th:text="${cat.nome}"></td>
+					<tr th:each="curso : ${cursos}">
+						<td th:text="${curso.id}"></td>
+						<td th:text="${curso.nome}"></td>
+						<td th:text="${curso.descricao}"></td>
+						<td th:text="${curso.preco}"></td>
 						<td>
 							<div class="btn-group pull-right">
 								<a class="btn btn-sm btn-primary">Editar</a>

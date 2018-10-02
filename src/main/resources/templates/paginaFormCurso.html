@@ -21,17 +21,38 @@
 	integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
 	crossorigin="anonymous"></script>
 <meta>
-<title>Menu</title>
+<title>Inserir Curso</title>
 </head>
 <body>
-	<div class="bg-danger position-relative">
-		<div class="row d-flex justify-content-center align-items-center">
-			<div class="col text-center">
-				<h2 class="text-center">Menu de Cursos</h2>
-				<a class="btn btn-primary" th:href="@{/listarCursos}">Listar</a>
-				<a class="btn btn-success" th:href="@{/formInserirCurso}">Inserir</a>
-			</div>
+
+	<div class="painel panel-default">
+		<div class="panel-heading">
+			<strong>Curso</strong>
 		</div>
 	</div>
+
+	<div class="container">
+		<form th:object="${curso}" th:action="@{/inserirCurso}" method="POST">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Nome"
+					th:field="*{nome}" />
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Descrição"
+					th:field="*{descricao}" />
+			</div>
+			<div class="form-group">
+				<input type="number" class="form-control" placeholder="Preço"
+					th:field="*{preco}" />
+			</div>
+			<select th:field="*{categorias}" class="custom-select">
+				<option value="">Selecione a categoria</option>
+				<option th:each="cat : ${categorias}" th:value="${cat.id}" th:text="${cat.nome}"></option>
+			</select>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>
+
+
 </body>
 </html>
