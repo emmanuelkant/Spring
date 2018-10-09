@@ -32,7 +32,11 @@
 	</div>
 
 	<div class="container">
-		<form th:object="${curso}" th:action="@{/inserirCurso}" method="POST">
+		<form th:object="${curso}" th:action="@{/alterarCurso}" method="POST">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Identificador" readonly
+					th:field="*{id}" />
+			</div>
 			<div class="form-group">
 				<input type="text" class="form-control" placeholder="Nome"
 					th:field="*{nome}" />
@@ -42,19 +46,14 @@
 					th:field="*{descricao}" />
 			</div>
 			<div class="form-group">
-				<input type="text" class="form-control" placeholder="Preço"
-					pattern="^\d+(\.\d{1,2})?$"
-					title="Utilize ponto (.) como separador e somente números"
+				<input type="text" class="form-control" placeholder="Preço" pattern="^\d+(\.\d{1,2})?$" title="Utilize ponto (.) como separador e somente números"
 					th:field="*{preco}" />
 			</div>
-			
-
 			<ul style="list-style: none;">
 				<li th:each="cat : ${categorias}"><input type="checkbox"
 					th:field="*{categorias}" th:value="${cat.id}" th:checked="${true}" />
 					<label th:text="${cat.nome}">ROLE_USER</label></li>
 			</ul>
-
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>

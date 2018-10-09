@@ -23,15 +23,15 @@
 <meta>
 <title>Menu</title>
 </head>
-<body>
-	<div class="bg-danger position-relative">
-		<div class="row d-flex justify-content-center align-items-center">
-			<div class="col text-center">
-				<h2 class="text-center">Menu de Cursos</h2>
-				<a class="btn btn-primary" th:href="@{/listarCursos}">Listar</a>
-				<a class="btn btn-success" th:href="@{/formInserirCurso}">Inserir</a>
+<body style="height: 100vh;">
+
+		<div class="h-100 d-flex justify-content-center align-items-center">
+			<div class="col text-center jumbotron" style="background-color: #f48fb1;"> 
+				<h2 class="text-center mb-5 display-2">Menu de Cursos</h2>
+				<a class="btn btn-lg btn-primary pr-5 pl-5 mr-5" th:href="@{/listarCursos}">Listar</a>
+				<a class="btn btn-lg btn-success pr-5 pl-5 ml-5" th:href="@{/formInserirCurso}">Inserir</a>
 			</div>
 		</div>
-	</div>
+
 </body>
 </html>

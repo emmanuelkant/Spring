@@ -13,13 +13,15 @@
 </head>
 <body>
 
-	<div class="painel panel-default">
-		<div class="panel-heading">
-			<strong>Cursos</strong>
+	<div class="bg-default">
+		<div class="jumbotron">
+			<div class="container">
+			<p class="display-4">Cursos</p>
+			</div>
 		</div>
 	</div>
 
-	<div class="panel-body">
+	<div class="container">
 		<div class="table-responsive">
 			<table class="table table-sm table-striped table-hover table-bordered">
 				<thead>
@@ -28,6 +30,7 @@
 						<th>Curso</th>
 						<th>Descricao</th>
 						<th>Preco</th>
+						<th>Categorias</th>
 						<th>Ações</th>
 					</tr>
 				</thead>
@@ -38,9 +41,12 @@
 						<td th:text="${curso.descricao}"></td>
 						<td th:text="${curso.preco}"></td>
 						<td>
+							<span th:each="cat : ${curso.categorias}" th:text="${cat.nome + ' | '}"></span>
+						</td>
+						<td>
 							<div class="btn-group pull-right">
-								<a class="btn btn-sm btn-primary">Editar</a>
-								<a class="btn btn-sm btn-danger">Excluir</a>
+								<a th:href="@{/alterarCurso/{id}(id=${curso.id})}" class="btn btn-sm btn-primary">Editar</a>
+								<a th:href="@{/excluirCurso/{id}(id=${curso.id})}" class="btn btn-sm btn-danger">Excluir</a>
 							</div>
 						</td>
 					</tr>

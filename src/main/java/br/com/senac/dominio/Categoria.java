@@ -31,13 +31,13 @@ public class Categoria implements Serializable {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "categorias")
 	private List<Curso> cursos = new ArrayList<>();
 
-	public Categoria() {
-		super();
-	}
-	
-	public Categoria(Integer id) {
-		super();
-	}
+//	public Categoria() {
+//		super();
+//	}
+//	
+//	public Categoria(Integer id) {
+//		super();
+//	}
 	
 	
 	public Integer getId() {
