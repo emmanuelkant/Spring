@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+	integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+	integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+	crossorigin="anonymous"></script>
+<meta>
+<title>Inserir Curso</title>
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+<style>
+* {
+	font-family: 'Source Sans Pro', sans-serif;
+}
+.jumbotron-bg {
+	background-color: #42A5F5;
+}
+</style>
+</head>
+<body>
+
+	<div class="bg-default">
+		<div class="jumbotron jumbotron-bg">
+			<div class="container">
+			<p class="display-4">Novo Curso</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<form class="width-50" th:object="${curso}" th:action="@{/inserirCurso}" method="POST">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Nome"
+					th:field="*{nome}" />
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Descrição"
+					th:field="*{descricao}" />
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Preço"
+					pattern="^\d+(\.\d{1,2})?$"
+					title="Utilize ponto (.) como separador e somente números"
+					th:field="*{preco}" />
+			</div>
+			
+
+			<ul style="list-style: none;">
+				<li th:each="cat : ${categorias}"><input type="checkbox"
+					th:field="*{categorias}" th:value="${cat.id}" th:checked="${true}" />
+					<label th:text="${cat.nome}">ROLE_USER</label></li>
+			</ul>
+
+			<button type="submit" class="btn btn-primary float-right">Submit</button>
+		</form>
+	</div>
+
+
+</body>
+</html>
