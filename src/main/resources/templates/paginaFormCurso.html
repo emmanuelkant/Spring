@@ -61,9 +61,14 @@
 			
 
 			<ul style="list-style: none;">
-				<li th:each="cat : ${categorias}"><input type="checkbox"
-					th:field="*{categorias}" th:value="${cat.id}" th:checked="${true}" />
-					<label th:text="${cat.nome}">ROLE_USER</label></li>
+				<li th:each="cat : ${categorias}">
+					<input 
+						type="checkbox" 
+						th:field="*{categorias}" 
+						th:value="${cat.id}" 
+						th:checked="${true}" />
+					<label th:text="${cat.nome}">ROLE_USER</label>
+				</li>
 			</ul>
 
 			<button type="submit" class="btn btn-primary float-right">Submit</button>
