@@ -2,6 +2,8 @@ package br.com.senac.inicializacao;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -14,6 +16,7 @@ import br.com.senac.dominio.Cidade;
 import br.com.senac.dominio.Curso;
 import br.com.senac.dominio.Endereco;
 import br.com.senac.dominio.Estado;
+import br.com.senac.dominio.ItemPedido;
 import br.com.senac.dominio.Pagamento;
 import br.com.senac.dominio.PagamentoComBoleto;
 import br.com.senac.dominio.Pedido;
@@ -24,6 +27,7 @@ import br.com.senac.repositorio.CidadeRepositorio;
 import br.com.senac.repositorio.CursoRepositorio;
 import br.com.senac.repositorio.EnderecoRepositorio;
 import br.com.senac.repositorio.EstadoRepositorio;
+import br.com.senac.repositorio.ItemPedidoRepositorio;
 import br.com.senac.repositorio.PagamentoRepositorio;
 import br.com.senac.repositorio.PedidoRepositorio;
 
@@ -53,6 +57,9 @@ public class Init implements ApplicationListener<ContextRefreshedEvent> {
 	
 	@Autowired
 	CategoriaRepositorio categoriaRepositorio;
+	
+	@Autowired
+	ItemPedidoRepositorio itemPedidoRepositorio;
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -169,7 +176,7 @@ public class Init implements ApplicationListener<ContextRefreshedEvent> {
 		ped1.setEnderecoDeEntrega(end1);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
+		
 		try {
 			// fez o pedido nesta data
 			ped1.setDataPedido(sdf.parse("27/06/2018 09:08"));
@@ -187,6 +194,24 @@ public class Init implements ApplicationListener<ContextRefreshedEvent> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		ItemPedido item1 = new ItemPedido(ped1, curso1, 0.00, 1, 200.00);
+		ItemPedido item2 = new ItemPedido(ped1, curso2, 10.00, 1, 390.00);
+
+
+		Set<ItemPedido> listaItens1 = new HashSet();
+		listaItens1.add(item1);
+		listaItens1.add(item1);
+		ped1.setItens(listaItens1);
+
+		curso1.setItens(listaItens1);
+		curso2.setItens(listaItens1);
+
+		System.out.println(item1);
+		System.out.println(item2);
+		
+		itemPedidoRepositorio.saveAll(Arrays.asList(item1, item2));
+		
 	}
 	
 }

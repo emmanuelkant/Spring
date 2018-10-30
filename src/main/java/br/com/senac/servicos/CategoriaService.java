@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.senac.dominio.Categoria;
 import br.com.senac.repositorio.CategoriaRepositorio;
-import javassist.tools.rmi.ObjectNotFoundException;
+import br.com.senac.servicos.exception.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {

@@ -2,7 +2,9 @@ package br.com.senac.dominio;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -36,6 +39,28 @@ public class Curso implements Serializable {
 	@JoinTable(name = "categorias_cursos", joinColumns = { @JoinColumn(name = "curso_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "categoria_id") })
 	private List<Categoria> categorias = new ArrayList<>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="id.curso")
+	private Set<ItemPedido> itens = new HashSet<ItemPedido>();
+
+	@JsonIgnore
+	public List<Pedido> getPedidos() {
+		List<Pedido> lista = new ArrayList<Pedido>();
+		for(ItemPedido i : itens) {
+			lista.add(i.getPedido());
+		}
+		return lista;
+	}
+
+	public Set<ItemPedido> getItens() {
+		return this.itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens){
+		this.itens = itens;
+	}
+	
 
 	public Integer getId() {
 		return id;
