@@ -45,9 +45,9 @@
 	</div>
 
 	<div class="container">
-	<div th:if="${cursos.isEmpty()}">
-		<h2 class="display-4 text-center">Nenhum registro encontrado!</h2>
-	</div>
+		<div th:if="${cursos.isEmpty()}">
+			<h2 class="display-4 text-center">Nenhum registro encontrado!</h2>
+		</div>
 		<div class="table-responsive" th:unless="${cursos.isEmpty()}">
 			<table
 				class="table table-sm table-striped table-hover table-bordered">
@@ -81,6 +81,9 @@
 				</tr>
 			</tbody>
 			</table>
+		</div>
+		<div class="text-center">
+			<a class="btn btn-secondary" th:href="@{/menu}">Voltar para o Menu</a>
 		</div>
 	</div>
 

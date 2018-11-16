@@ -1,23 +1,25 @@
 package br.com.senac.controles;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.senac.servicos.CategoriaService;
-import br.com.senac.servicos.MenuService;
+import br.com.senac.dominio.Aluno;
 
 @Controller
 public class MenuController {
-
-	@Autowired
-	private MenuService menuService;
 	
 	@GetMapping("/menu")
 	public ModelAndView menu() {
 		ModelAndView mv = new ModelAndView("/paginaMenu");
 		
+		return mv;
+	}
+	
+	@GetMapping("/")
+	public ModelAndView index() {
+		ModelAndView mv = new ModelAndView("/paginaLogin");
+		mv.addObject("usuario", new Aluno());
 		return mv;
 	}
 	

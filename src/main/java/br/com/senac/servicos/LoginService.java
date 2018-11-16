@@ -12,11 +12,11 @@ public class LoginService {
 	@Autowired
 	private AlunoRepositorio alunoCat;
 
-	public boolean login(Aluno aluno) {
+	public Aluno login(Aluno aluno) {
 		Aluno alunoEncontrado = alunoCat.findByEmailAndNome(aluno.getEmail(), aluno.getNome());
 		if (alunoEncontrado == null)
-			return false;
-		return true;
+			return null;
+		return alunoEncontrado;
 
 	}
 

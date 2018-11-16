@@ -162,9 +162,9 @@ public class Init implements ApplicationListener<ContextRefreshedEvent> {
 		end2.setCep("21572-201");
 		end2.setCidade(cidade2);
 		end2.setAluno(aluno2);
-
+		System.out.println("OI");
 		aluno1.getTelefones().addAll(Arrays.asList("2323232323", "2323232324"));
-
+		System.out.println("OI2");
 		alunoRepositorio.save(aluno1);
 		alunoRepositorio.save(aluno2);
 
@@ -201,7 +201,7 @@ public class Init implements ApplicationListener<ContextRefreshedEvent> {
 
 		Set<ItemPedido> listaItens1 = new HashSet();
 		listaItens1.add(item1);
-		listaItens1.add(item1);
+		listaItens1.add(item2);
 		ped1.setItens(listaItens1);
 
 		curso1.setItens(listaItens1);

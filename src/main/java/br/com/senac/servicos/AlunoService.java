@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.senac.dominio.Aluno;
 import br.com.senac.repositorio.AlunoRepositorio;
+import br.com.senac.repositorio.EnderecoRepositorio;
 import br.com.senac.servicos.exception.ObjectNotFoundException;
 
 @Service
@@ -15,7 +16,7 @@ public class AlunoService {
 
 	@Autowired
 	private AlunoRepositorio repoAluno;
-	
+
 	public Aluno buscar(Integer id) throws ObjectNotFoundException {
 		Optional<Aluno> objAluno = repoAluno.findById(id);
 		return objAluno.orElseThrow(() -> new ObjectNotFoundException(
