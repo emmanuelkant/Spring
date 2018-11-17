@@ -97,56 +97,79 @@ public class CarrinhoController {
 
 	@GetMapping("/closeCart")
 	public String preparToCloseCart(HttpSession session) throws ParseException, ObjectNotFoundException {
-		Pedido newOrder = new Pedido();
-		List<Item> cart = (List<Item>) session.getAttribute("cart");
-		Set<ItemPedido> orderItem = new HashSet<ItemPedido>();
 		
-		Set<Curso> courses = new HashSet<Curso>();
-		
-		
-		
-		for (Item item : cart) {
-			item.setCurso(cursoService.buscar(item.getCurso().getId()));
-			courses.add(item.getCurso());
-			orderItem.add(new ItemPedido(newOrder, item.getCurso(), 0.0D, item.getQuantidade(), item.getCurso().getPreco()));
-		}
-		
-		for (Curso c : courses) {
-			if (c.getItens().isEmpty()) {
-				c.setItens(orderItem);
-			} else {
-				for (ItemPedido ip : orderItem) {
-					c.getItens().add(ip);				
-				}				
+		try {
+			// Criando novo pedido.
+			Pedido newOrder = new Pedido();
+			
+			// Buscando o cliente da sessão.
+			Aluno client = (Aluno) session.getAttribute("user");
+			// Resgatando o cliente e todos os seus dados.
+			client = alunoService.buscar(client.getId());
+			// Inserindo cliente no pedido.
+			newOrder.setAluno(client);
+			// Inserindo o endereço de compra para o cliente.
+			newOrder.setEnderecoDeEntrega(client.getEnderecos().get(0));
+			// Resgatando o carrinho de compras da sessão.
+			List<Item> cart = (List<Item>) session.getAttribute("cart");
+			
+			Set<ItemPedido> orderItens = new HashSet<ItemPedido>();
+			
+			Set<Curso> courses = new HashSet<Curso>();
+			// A cada iteração um (1) item.
+			for (Item item : cart) {
+				// Resgatando o curso e todos os seus dados.
+				item.setCurso(cursoService.buscar(item.getCurso().getId()));
+				// Guardando a referência de cada curso do item, ou seja, cada curso comprado. 
+				courses.add(item.getCurso());
+				// Inserindo um novo @{ItemPedido} na lista de @{ItemPedido}.
+				orderItens.add(new ItemPedido(newOrder, item.getCurso(), 0.0D, item.getQuantidade(), item.getCurso().getPreco()));
 			}
+			// Cada iteração será um curso armazenado anteriormente.
+			for (Curso c : courses) {
+				// Verifica se o @{Curso} já tem algum @{ItemPedido}.
+				if (c.getItens().isEmpty()) {
+					// Se tiver só insere a lista.
+					c.setItens(orderItens);
+				} else {
+					// Se não tiver itera para quantos @{ItemPedido}s tiverem 
+					for (ItemPedido ip : orderItens) {
+						// Adiciona a lista existente.
+						c.getItens().add(ip);				
+					}				
+				}
+			}
+			// Insere a listade @{ItemPedido}s no pedido
+			newOrder.setItens(orderItens);
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+			// Insere a data (atual) que foi feita a compra.
+			newOrder.setDataPedido(new Date());
+			
+			// Marretando por enquanto o pagamento
+			Pagamento pag = new PagamentoComBoleto(null, StatusPagamento.PENDENTE, newOrder, sdf.parse("30/06/2018 00:00"),
+					sdf.parse("29/06/2018 00:00"));
+			// Insere a forma de pagamento no pedido
+			newOrder.setPagamento(pag);
+			
+			// A ordem importa muito na hora da inserção
+			pedidoService.inserir(newOrder);
+			pagamentoService.inserir(pag);
+			itemPedidoService.inserirVarios(orderItens);
+			// Limpando o Carrinho
+			resetCart(session);
+			
+			return "compraSucesso.html";
+			
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			return "compraFalha.html";
 		}
 		
-		newOrder.setItens(orderItem);
-		
-		Aluno client = (Aluno) session.getAttribute("user");
-		client = alunoService.buscar(client.getId());
-		newOrder.setAluno(client);
-		newOrder.setEnderecoDeEntrega(client.getEnderecos().get(0));
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		newOrder.setDataPedido(new Date());
-		
-		// Marretando por enquanto
-		Pagamento pag = new PagamentoComBoleto(null, StatusPagamento.PENDENTE, newOrder, sdf.parse("30/06/2018 00:00"),
-				sdf.parse("29/06/2018 00:00"));
-		
-		newOrder.setPagamento(pag);
-		
-		newOrder.setId(null);
-		
-		
-		itemPedidoService.inserirVarios(orderItem);
-		pagamentoService.inserir(pag);
-		pedidoService.inserir(newOrder);
-		
-
-
-		return "redirect:/indexCarrinho";
+	}
+	
+	private void resetCart(HttpSession session) {
+		session.setAttribute("cart", null);
 	}
 
 }
